@@ -36,12 +36,13 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
     // Рассчитываем ежемесячный платёж по исправленной формуле
     let monthlyPayment = loanBody * (monthlyPercent * Math.pow(1 + monthlyPercent, countMonths)) / (Math.pow(1 + monthlyPercent, countMonths) - 1);
     
-    // Общая сумма выплат (ежемесячный платёж * количество месяцев + первоначальный взнос)
-    let totalPayment = (monthlyPayment * countMonths) + contribution;
+    // Общая сумма выплат (ежемесячный платёж * количество месяцев)
+    let totalPayment = (monthlyPayment * countMonths);
     
-    // Округляем до двух знаков после запятой
+    // Округляем до двух знаков после запятой и возвращаем результат
     return +totalPayment.toFixed(2);
 }
+
 
 
 
