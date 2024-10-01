@@ -21,7 +21,20 @@ function solveEquation(a, b, c) {
 	return arr;
 }
 
-
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  
+    // Преобразуем годовую процентную ставку в месячную (в дробном виде)
+    let monthlyPercent = (percent / 100) / 12;
+    
+    // Рассчитываем тело кредита
+    let loanBody = amount - contribution;
+    
+    // Рассчитываем ежемесячный платёж по формуле
+    let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / ((1 + monthlyPercent) ** countMonths - 1)));
+    
+    // Общая сумма выплат (ежемесячный платёж * количество месяцев + первоначальный взнос)
+    let totalPayment = (monthlyPayment * countMonths) + contribution;
+    
+    // Округляем до двух знаков после запятой
+    return +totalPayment.toFixed(2);
 }
+
