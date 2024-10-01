@@ -25,8 +25,19 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
     // Преобразуем годовую процентную ставку в месячную (в дробном виде)
     let monthlyPercent = (percent / 100) / 12;
     
-    // Рассчитываем тело кредита
+    // Рассчитываем тело кредита (сумма кредита минус первоначальный взнос)
     let loanBody = amount - contribution;
+    
+    // Если тело кредита равно 0, значит, клиент уже всё выплатил
+    if (loanBody === 0) {
+        return 0;
+    }
+    
+    // Если процентная ставка равна 0, то месячный платеж просто тело кредита делённое на количество месяцев
+    if (monthlyPercent === 0) {
+        let totalPayment = loanBody / countMonths;
+        return +(totalPayment * countMonths + contribution).toFixed(2);
+    }
     
     // Рассчитываем ежемесячный платёж по формуле
     let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / ((1 + monthlyPercent) ** countMonths - 1)));
@@ -34,7 +45,7 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
     // Общая сумма выплат (ежемесячный платёж * количество месяцев + первоначальный взнос)
     let totalPayment = (monthlyPayment * countMonths) + contribution;
     
-    // Округляем до двух знаков после запятой
+    // Округляем до двух знаков после запятой и возвращаем результат
     return +totalPayment.toFixed(2);
 }
 
