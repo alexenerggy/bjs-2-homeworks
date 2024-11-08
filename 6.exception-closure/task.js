@@ -1,8 +1,10 @@
 ﻿//Задание 1
 
 function parseCount(value) {
-    const parsed = Number.parseFloat(value);
-    // Проверка, если значение NaN, выбрасываем исключение
+    // Преобразуем значение в число с плавающей запятой
+    const parsed = Number.parseFloat(value); // используем parseFloat для поддержки дробных чисел
+
+    // Проверка: если значение NaN, выбрасываем исключение
     if (isNaN(parsed)) {
         throw new Error("Невалидное значение");
     }
@@ -12,13 +14,16 @@ function parseCount(value) {
 // Функция для валидации числа
 function validateCount(value) {
     try {
-        // Пытаемся распарсить значение
+        // Пытаемся распарсить значение (включая дробные числа)
         return parseCount(value);
     } catch (error) {
         // Если произошла ошибка, возвращаем её
         return error;
     }
 }
+
+
+
 
 //Задание 2
 
@@ -53,13 +58,14 @@ function getTriangle(a, b, c) {
         return new Triangle(a, b, c);
     } catch (error) {
         // Если треугольник создать не удалось, возвращаем объект с геттерами, которые возвращают ошибку
-        return {
+        return Object.freeze({
             get perimeter() {
                 return "Ошибка! Треугольник не существует";
             },
             get area() {
                 return "Ошибка! Треугольник не существует";
             }
-        };
+        });
     }
 }
+
